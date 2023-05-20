@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" lang="fr">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <!-- Permet l'adaptation de la surface aux tablettes et mobiles -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JustStreamIt</title>
+    <link rel="stylesheet" href="css.css">
+
+
+  </head>
+<!--  Logo + lien vers les différentes catégories. -->
+  <body>
+    <div class="flex-head"> <a href="index.html"><img class="logo" src="images/logo.png"
+          alt=""></a>
+      <div><a href="#rank" class="menu">
+          <p>Film les mieux notés</p>
+        </a></div>
+      <div><a href="#anime_rank" class="menu">
+          <p>Animation</p>
+        </a></div>
+      <div><a href="#drama_rank" class="menu">
+          <p>Romance</p>
+        </a></div>
+      <div><a href="#fiction_rank" class="menu">
+          <p>Biographie</p>
+        </a></div>
+    </div>
+
+<!--Section du film le mieux noté    -->
+    <h1 id="bestOf" >Film le mieux noté</h1>
+    <div class="flex">
+      <div id="bestFilm_image"></div>
+      <div>
+          <div><h2 id="bestFilm_title"></h2></div>
+          <div id="myBtn"><button>Plus de Détails</button>
+            <!-- The Modal -->
+            <div id="myModal" class="modal">
+              <!-- Modal content -->
+              <div class="modal-content">
+                <span class="close" onclick="onClickSpan()">&times;</span>
+                <div class="flex-modal">
+                  <div id="modalImage"></div>
+                  <div class="flex-horizon">
+                      <div id="modalTitle"></div>
+                      <div id="modalGenres"></div>
+                      <div id="modalYear"></div>
+                      <div id="modalRated"></div>
+                      <div id="modalImdb_score"></div>
+                      <div id="modalRelease"></div>
+                      <div id="modalActors"></div>
+                      <div id="modalDuration"></div>
+                      <div id="modalCountries"></div>
+                      <div id="modalWorldwide_gross_income"></div>
+                      <div id="modalResume"></div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        <span id="mot">Résumé:</span>
+          <div id="bestFilm_resume"></div>
+      </div>
+    </div>
+
+    <div class="flex">
+      <section class="slider-wrapper">
+        <button class="slide-arrow" id="slide-arrow-prev">&#8249;</button>
+        <button class="slide-arrow" id="slide-arrow-next">&#8250;</button>
+      <div id="rank" class="flex-container"> </div>
+      </section>
+    </div>
+    <!--    Films d'Actions les mieux notés-->
+    <div class="flex">
+      <section class="slider-wrapper">
+        <button class="slide-arrow" id="slide-arrow-prev">&#8249;</button>
+        <button class="slide-arrow" id="slide-arrow-next">&#8250;</button>
+        <div id="anime_rank" class="flex-container"></div>
+      </section>
+    </div>
+    <!--    Films dramatiques les mieux notés-->
+    <div class="flex">
+      <section class="slider-wrapper">
+        <button class="slide-arrow" id="slide-arrow-prev">&#8249;</button>
+        <button class="slide-arrow" id="slide-arrow-next">&#8250;</button>
+        <div id="drama_rank" class="flex-container"></div>
+      </section>
+    </div>
+
+    <!--    Films de sciences fictions les mieux notés-->
+<!--    <div class="flex">-->
+<!--      <div class="arrow_left"><button><</button></div>-->
+<!--      <div id="fiction_rank" class="flex-container"></div>-->
+<!--      <div class="arrow_right"><button>></button></div>-->
+<!--    </div>-->
+
+  <!--    Films de sciences fictions les mieux notés-->
+    <div class="flex">
+      <section class="slider-wrapper">
+        <button class="slide-arrow" id="slide-arrow-prev">&#8249;</button>
+        <button class="slide-arrow" id="slide-arrow-next">&#8250;</button>
+        <div id="fiction_rank" class="flex-container"></div>
+      </section>
+    </div>
+<script src="js.js"></script>
+  </body>
+
+</html>
