@@ -63,14 +63,18 @@ fetch(url_page1)
 .then((data) => {
     let movies = data;
     let best_rank = document.getElementById("rank");
-
+    let cpt = 1;
     console.log(movies);
 
     movies.results.forEach(function(movie){
         const movie_div = document.createElement("div");
+        movie_div.id = 'img' + cpt;
+        cpt++;
         movie_div.style.backgroundImage = `url('${movie.image_url}')`;
-        movie_div.onclick = function(){modal.style.display = "block"};
+        movie_div.id.onclick = function(){modal.style.display = "block"};
         best_rank.appendChild(movie_div);
+        console.log(movie_div, movie_div.id)
+
 
     })
 })
@@ -150,8 +154,7 @@ btn.onclick = function() {
 
 // When the user clicks on <span> (x), close the modal
 function onClickSpan(){
-    console.log("Hello !!!")
-    modal.style.display = "";
+    btn.style.display = "none";
 }
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
