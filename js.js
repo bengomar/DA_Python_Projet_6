@@ -1,8 +1,37 @@
-fetch("http://localhost:8000/api/v1/titles/?sort_by=-votes,-imdb_score")
-.then((response) => {
-    return response.json();
-})
-.then((data) => {
+const site = "http://localhost:8000/api/v1/titles/";
+let imdb_score = site+"?sort_by=-votes,-imdb_score&page_size=7"; //Les 7 meilleurs films
+let urlGenre = site+"?sort_by=-votes,-imdb_score&page_size=7&genre="; // Les 7 meilleurs films par genre
+//let genres = ['Animation', 'Romance', 'Biography']; // Liste des genres sélectionnés
+
+function fetchingApiViaUrl(url) {
+    return fetch(url)
+    .then((response) => {
+        return response.json()
+    })
+}
+
+function slideArrowsFunction(genre, left_arrow, right_arrow) {
+
+//    var slides = document.getElementsByClassName("slide-arrow-prev");
+    for (var i = 0; i < left_arrow.length; i++) {
+        let arrow_prev = left_arrow[i]
+        arrow_prev.addEventListener("click", () => {
+              genre.scrollBy(-180, 0);
+        })
+    }
+
+//    var slides2 = document.getElementsByClassName("slide-arrow-next");
+    for (var i = 0; i < right_arrow.length; i++) {
+        let arrow_next = right_arrow[i]
+        arrow_next.addEventListener("click", () => {
+            genre.scrollBy(+180, 0);
+        })
+    }
+
+}
+
+fetchingApiViaUrl(imdb_score)
+.then(data => {
     let best_film = data.results[0];
     let image = document.getElementById("bestFilm_image");
     let title = document.getElementById("bestFilm_title");
@@ -11,18 +40,14 @@ fetch("http://localhost:8000/api/v1/titles/?sort_by=-votes,-imdb_score")
     let modalGenres = document.getElementById("modalGenres");
     let modalYear = document.getElementById("modalYear");
 
-
-    console.log(best_film);
+    //console.log(best_film);
 
     image.style.backgroundImage = `url('${best_film.image_url}')`;
     title.innerText = best_film.title;
     modalImage.style.backgroundImage = `url('${best_film.image_url}')`;
     modalTitle.innerText = "Titre: " + best_film.title;
-    modalGenres.innerText = "Genres: " + best_film.genres[0];
+    modalGenres.innerText = "Genre: " + best_film.genres[0];
     modalYear.innerText = "Année: " + best_film.year;
-/*
-
-*/
 
     return fetch(`http://localhost:8000/api/v1/titles/${best_film.id}`);
 })
@@ -30,7 +55,7 @@ fetch("http://localhost:8000/api/v1/titles/?sort_by=-votes,-imdb_score")
     return response.json();
 })
 .then((filmInfo) => {
-    console.log(filmInfo);
+    //console.log(filmInfo);
 
     let description = document.getElementById("bestFilm_resume");
     let modalRated = document.getElementById("modalRated");
@@ -55,97 +80,101 @@ fetch("http://localhost:8000/api/v1/titles/?sort_by=-votes,-imdb_score")
 
 
 // the best films imdb ranking
-let url_page1 = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&sort_by=-votes&page_size=7"
-fetch(url_page1)
-.then((response) => {
-    return response.json();
-})
+
+fetchingApiViaUrl(imdb_score)
 .then((data) => {
     let movies = data;
-    let best_rank = document.getElementById("rank");
+    let movies_genre = document.getElementById("rank");
     let cpt = 1;
-    console.log(movies);
 
     movies.results.forEach(function(movie){
         const movie_div = document.createElement("div");
-        movie_div.id = 'img' + cpt;
+        movie_div.classList.add("movie-cover");
+        movie_div.id = 'rank-img' + cpt;
         cpt++;
         movie_div.style.backgroundImage = `url('${movie.image_url}')`;
         movie_div.id.onclick = function(){modal.style.display = "block"};
-        best_rank.appendChild(movie_div);
+        movies_genre.appendChild(movie_div);
         console.log(movie_div, movie_div.id)
 
 
     })
+    let left_arrow = document.getElementById("rank-arrow-left");
+    let right_arrow = document.getElementById("rank-arrow-right");
+    slideArrowsFunction(movies_genre, left_arrow , right_arrow)
+    movies_genre.scrollLeft = 0
 })
-
 
 // requete des films genre Animation les mieux notés
-fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&sort_by=-votes&genre=Animation&page_size=7")
-.then((response) => {
-    return response.json();
-})
+
+fetchingApiViaUrl(urlGenre+'Animation')
 .then((data) => {
     let movies = data;
     let best_anime_rank = document.getElementById("anime_rank");
-
-    console.log(movies);
+    let cpt = 1;
 
     movies.results.forEach(function(movie){
         const movie_div = document.createElement("div");
+        movie_div.classList.add("movie-cover");
+        movie_div.id = 'anime-img' + cpt;
+        cpt++;
         movie_div.style.backgroundImage = `url('${movie.image_url}')`;
-        movie_div.onclick = function(){modal.style.display = "block"};
+        //movie_div.onclick = function(){modal.style.display = "block"};
         best_anime_rank.appendChild(movie_div);
+        console.log(movie_div, movie_div.id)
     })
 })
 
 // requete des films genre Romance les mieux notés
-fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&sort_by=-votes&genre=Romance&page_size=7")
-.then((response) => {
-    return response.json();
-})
+
+fetchingApiViaUrl(urlGenre+'Romance')
 .then((data) => {
     let movies = data;
     let best_drama_rank = document.getElementById("drama_rank");
-
-    console.log(movies);
+    let cpt = 1;
 
     movies.results.forEach(function(movie){
         const movie_div = document.createElement("div");
+        movie_div.classList.add("movie-cover");
+        movie_div.id = 'drama-img' + cpt;
+        cpt++;
         movie_div.style.backgroundImage = `url('${movie.image_url}')`;
-        movie_div.onclick = function(){modal.style.display = "block"};
+        //movie_div.onclick = function(){modal.style.display = "block"};
         best_drama_rank.appendChild(movie_div);
+        console.log(movie_div, movie_div.id)
     })
 })
 
-// requete des films de science fictions les mieux notés
-fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&sort_by=-votes&genre=Biography&page_size=7")
-.then((response) => {
-    return response.json();
-})
+//// requete des films de science fictions les mieux notés
+
+fetchingApiViaUrl(urlGenre+'Biography')
 .then((data) => {
     let movies = data;
-    let best_fiction_rank = document.getElementById("fiction_rank");
+    let best_bio_rank = document.getElementById("bio_rank");
+    let cpt = 1;
 
     console.log(movies);
 
     movies.results.forEach(function(movie){
         const movie_div = document.createElement("div");
-
+        movie_div.classList.add("movie-cover");
+        movie_div.id = 'bio-img' + cpt;
+        cpt++;
         movie_div.style.backgroundImage = `url('${movie.image_url}')`;
         movie_div.onclick = function(){modal.style.display = "block"};
-        best_fiction_rank.appendChild(movie_div);
+        best_bio_rank.appendChild(movie_div);
+        console.log(movie_div, movie_div.id)
     })
 })
 
 // Get the modal
-var modal = document.getElementById("myModal");
+let modal = document.getElementById("myModal");
 
 // Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+let btn = document.getElementById("myBtn");
 
 // Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+let span = document.getElementsByClassName("close")[0];
 
 // When the user clicks the button, open the modal
 btn.onclick = function() {
@@ -153,8 +182,11 @@ btn.onclick = function() {
 }
 
 // When the user clicks on <span> (x), close the modal
-function onClickSpan(){
-    btn.style.display = "none";
+//function onClickSpan(){
+//    modal.style.display = "none";
+//}
+span.onclick = function() {
+  modal.style.display = "none";
 }
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
