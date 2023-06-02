@@ -16,7 +16,7 @@
       <div><a href="#rank" class="menu"><p>Film les mieux notés</p></a></div>
       <div><a href="#anime_rank" class="menu"><p>Animation</p></a></div>
       <div><a href="#drama_rank" class="menu"><p>Romance</p></a></div>
-      <div><a href="#fiction_rank" class="menu"><p>Biographie</p></a></div>
+      <div><a href="#bio_rank" class="menu"><p>Biographie</p></a></div>
     </div>
 
 <!--Section du film le mieux noté    -->
@@ -31,7 +31,7 @@
               <!-- Modal content -->
               <div class="modal-content">
 <!--                <span class="close" onclick="onClickSpan()">&times;</span>-->
-                  <span class="close">&times;</span>
+                  <span class="close">&times</span>
                 <div class="flex-modal">
                   <div id="modalImage"></div>
                   <div class="flex-horizon">
@@ -60,32 +60,33 @@
 
     <div id="caroussels">
 
-            <div class="flex">
-                <button id="rank-arrow-left" class="slide-arrow-prev">&#8249;</button>
-                <div id="rank" class="flex-container"> </div>
-                <button id="rank-arrow-right" class="slide-arrow-next">&#8250;</button>
-            </div>
-
-        <!--    Films d'Actions les mieux notés-->
+        <!--    Films d'Animations les mieux notés-->
         <div class="flex">
-            <button class="slide-arrow-prev" >&#8249;</button>
+            <button class="slide-arrow-prev rank-arrow-left">&#8249;</button>
+            <div id="rank" class="flex-container"> </div>
+            <button class="slide-arrow-next rank-arrow-right">&#8250;</button>
+        </div>
+
+        <!--    Films d'Animations les mieux notés-->
+        <div class="flex">
+            <button class="slide-arrow-prev anime-arrow-left" >&#8249;</button>
             <div id="anime_rank" class="flex-container"></div>
-            <button class="slide-arrow-next">&#8250;</button>
+            <button class="slide-arrow-next anime-arrow-right">&#8250;</button>
 
         </div>
 
         <!--    Films dramatiques les mieux notés-->
         <div class="flex">
-            <button class="slide-arrow-prev" >&#8249;</button>
+            <button class="slide-arrow-prev drama-arrow-left" >&#8249;</button>
             <div id="drama_rank" class="flex-container"></div>
-            <button class="slide-arrow-next">&#8250;</button>
+            <button class="slide-arrow-next drama-arrow-right">&#8250;</button>
         </div>
 
         <!--    Films biographiques les mieux notés-->
         <div class="flex">
-            <button class="slide-arrow-prev" >&#8249;</button>
+            <button class="slide-arrow-prev bio-arrow-left" >&#8249;</button>
             <div id="bio_rank" class="flex-container"></div>
-            <button class="slide-arrow-next">&#8250;</button>
+            <button class="slide-arrow-next bio-arrow-right">&#8250;</button>
         </div>
 
     </div>

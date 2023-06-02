@@ -30,6 +30,7 @@ img.logo:hover {
     display: flex;
     justify-content: center;
     margin: 1em;
+    margin-bottom: 4em;
 }
 
 #bestFilm_image {

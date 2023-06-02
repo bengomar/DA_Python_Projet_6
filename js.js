@@ -1,7 +1,6 @@
 const site = "http://localhost:8000/api/v1/titles/";
 let imdb_score = site+"?sort_by=-votes,-imdb_score&page_size=7"; //Les 7 meilleurs films
 let urlGenre = site+"?sort_by=-votes,-imdb_score&page_size=7&genre="; // Les 7 meilleurs films par genre
-//let genres = ['Animation', 'Romance', 'Biography']; // Liste des genres sélectionnés
 
 function fetchingApiViaUrl(url) {
     return fetch(url)
@@ -12,15 +11,12 @@ function fetchingApiViaUrl(url) {
 
 function slideArrowsFunction(genre, left_arrow, right_arrow) {
 
-//    var slides = document.getElementsByClassName("slide-arrow-prev");
     for (var i = 0; i < left_arrow.length; i++) {
         let arrow_prev = left_arrow[i]
         arrow_prev.addEventListener("click", () => {
               genre.scrollBy(-180, 0);
         })
     }
-
-//    var slides2 = document.getElementsByClassName("slide-arrow-next");
     for (var i = 0; i < right_arrow.length; i++) {
         let arrow_next = right_arrow[i]
         arrow_next.addEventListener("click", () => {
@@ -35,19 +31,12 @@ fetchingApiViaUrl(imdb_score)
     let best_film = data.results[0];
     let image = document.getElementById("bestFilm_image");
     let title = document.getElementById("bestFilm_title");
-    let modalImage = document.getElementById("modalImage");
-    let modalTitle = document.getElementById("modalTitle");
-    let modalGenres = document.getElementById("modalGenres");
-    let modalYear = document.getElementById("modalYear");
+
 
     //console.log(best_film);
 
     image.style.backgroundImage = `url('${best_film.image_url}')`;
     title.innerText = best_film.title;
-    modalImage.style.backgroundImage = `url('${best_film.image_url}')`;
-    modalTitle.innerText = "Titre: " + best_film.title;
-    modalGenres.innerText = "Genre: " + best_film.genres[0];
-    modalYear.innerText = "Année: " + best_film.year;
 
     return fetch(`http://localhost:8000/api/v1/titles/${best_film.id}`);
 })
@@ -58,6 +47,11 @@ fetchingApiViaUrl(imdb_score)
     //console.log(filmInfo);
 
     let description = document.getElementById("bestFilm_resume");
+
+    let modalImage = document.getElementById("modalImage");
+    let modalTitle = document.getElementById("modalTitle");
+    let modalGenres = document.getElementById("modalGenres");
+    let modalYear = document.getElementById("modalYear");
     let modalRated = document.getElementById("modalRated");
     let modalImdb_score = document.getElementById("modalImdb_score");
     let modalRelease = document.getElementById("modalRelease");
@@ -68,6 +62,11 @@ fetchingApiViaUrl(imdb_score)
     let modalResume = document.getElementById("modalResume");
 
     description.innerText = filmInfo.description
+
+    modalImage.style.backgroundImage = `url('${filmInfo.image_url}')`;
+    modalTitle.innerText = "Titre: " + filmInfo.title;
+    modalGenres.innerText = "Genre: " + filmInfo.genres[0];
+    modalYear.innerText = "Année: " + filmInfo.year;
     modalRated.innerText = "Rated: " + filmInfo.rated;
     modalImdb_score.innerText = "Score Imdb: " + filmInfo.imdb_score;
     modalRelease.innerText = "Réalisateurs: " + filmInfo.directors;
@@ -84,7 +83,7 @@ fetchingApiViaUrl(imdb_score)
 fetchingApiViaUrl(imdb_score)
 .then((data) => {
     let movies = data;
-    let movies_genre = document.getElementById("rank");
+    let best_movies_rank = document.getElementById("rank");
     let cpt = 1;
 
     movies.results.forEach(function(movie){
@@ -94,15 +93,18 @@ fetchingApiViaUrl(imdb_score)
         cpt++;
         movie_div.style.backgroundImage = `url('${movie.image_url}')`;
         movie_div.id.onclick = function(){modal.style.display = "block"};
-        movies_genre.appendChild(movie_div);
+        best_movies_rank.appendChild(movie_div);
         console.log(movie_div, movie_div.id)
 
 
     })
-    let left_arrow = document.getElementById("rank-arrow-left");
-    let right_arrow = document.getElementById("rank-arrow-right");
-    slideArrowsFunction(movies_genre, left_arrow , right_arrow)
-    movies_genre.scrollLeft = 0
+
+    let left_arrow = document.getElementsByClassName("rank-arrow-left")
+    let right_arrow = document.getElementsByClassName("rank-arrow-right");
+
+    slideArrowsFunction(best_movies_rank, left_arrow, right_arrow);
+
+    best_movies_rank.scrollLeft = 0
 })
 
 // requete des films genre Animation les mieux notés
@@ -123,6 +125,13 @@ fetchingApiViaUrl(urlGenre+'Animation')
         best_anime_rank.appendChild(movie_div);
         console.log(movie_div, movie_div.id)
     })
+
+    let left_arrow = document.getElementsByClassName("anime-arrow-left")
+    let right_arrow = document.getElementsByClassName("anime-arrow-right");
+
+    slideArrowsFunction(best_anime_rank, left_arrow, right_arrow);
+
+    best_anime_rank.scrollLeft = 0
 })
 
 // requete des films genre Romance les mieux notés
@@ -143,6 +152,13 @@ fetchingApiViaUrl(urlGenre+'Romance')
         best_drama_rank.appendChild(movie_div);
         console.log(movie_div, movie_div.id)
     })
+
+    let left_arrow = document.getElementsByClassName("drama-arrow-left")
+    let right_arrow = document.getElementsByClassName("drama-arrow-right");
+
+    slideArrowsFunction(best_drama_rank, left_arrow, right_arrow);
+
+    best_drama_rank.scrollLeft = 0
 })
 
 //// requete des films de science fictions les mieux notés
@@ -165,6 +181,13 @@ fetchingApiViaUrl(urlGenre+'Biography')
         best_bio_rank.appendChild(movie_div);
         console.log(movie_div, movie_div.id)
     })
+
+    let left_arrow = document.getElementsByClassName("bio-arrow-left")
+    let right_arrow = document.getElementsByClassName("bio-arrow-right");
+
+    slideArrowsFunction(best_bio_rank, left_arrow, right_arrow);
+
+    best_bio_rank.scrollLeft = 0
 })
 
 // Get the modal
