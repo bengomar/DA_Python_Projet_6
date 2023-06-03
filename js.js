@@ -2,6 +2,7 @@ const site = "http://localhost:8000/api/v1/titles/";
 let imdb_score = site+"?sort_by=-votes,-imdb_score&page_size=7"; //Les 7 meilleurs films
 let urlGenre = site+"?sort_by=-votes,-imdb_score&page_size=7&genre="; // Les 7 meilleurs films par genre
 
+
 function fetchingApiViaUrl(url) {
     return fetch(url)
     .then((response) => {
@@ -54,6 +55,37 @@ function ModalMovieInformations(filmInfo) {
     modalResume.innerText = "Résumé: \n" + filmInfo.long_description;
 }
 
+function ModalTriggering(modalId, triggerId){
+
+    // Get the modal
+    let modal = document.getElementById(modalId);
+
+    // Get the button that opens the modal
+    let btn = document.getElementById(triggerId);
+
+    // Get the <span> element that closes the modal
+    let span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    //function onClickSpan(){
+    //    modal.style.display = "none";
+    //}
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+}
+
 fetchingApiViaUrl(imdb_score)
 .then(data => {
     let best_film = data.results[0];
@@ -85,43 +117,50 @@ fetchingApiViaUrl(imdb_score)
 
 fetchingApiViaUrl(imdb_score)
 .then((data) => {
+
     let movies = data;
     let best_movies_rank = document.getElementById("rank");
     let cpt = 1;
-    let listImg = [];
-
-    movies.results.forEach(function(movie){
-        const movie_div = document.createElement("div");
-        movie_div.classList.add("movie-cover");
-        movie_div_id = 'rank-img' + cpt;
-        cpt++;
-        movie_div.style.backgroundImage = `url('${movie.image_url}')`;
-        best_movies_rank.appendChild(movie_div);
-        listImg.push(movie_div_id);
-    })
-    console.log(listImg);
-
+    let listPics = [];
     let left_arrow = document.getElementsByClassName("rank-arrow-left")
     let right_arrow = document.getElementsByClassName("rank-arrow-right");
     slideArrowsFunction(best_movies_rank, left_arrow, right_arrow);
     best_movies_rank.scrollLeft = 0
 
+    movies.results.forEach(function(movie){
+        const movie_div = document.createElement("div");
+        movie_div.classList.add("movie-cover");
+        movie_div_id = 'rank-img' + cpt;
+        movie_div.setAttribute("id", movie_div_id);
+        cpt++;
+        movie_div.style.backgroundImage = `url('${movie.image_url}')`;
+        listPics.push(movie_div_id);
+        best_movies_rank.appendChild(movie_div);
+        console.log(movie.id);
+        return fetch(`http://localhost:8000/api/v1/titles/${movie.id}`);
+    })
+    
+
+
+/*
+
     let ImagesRank = document.getElementsByClassName("movie-cover");
-
     for (var i = 0; i < ImagesRank.length; i++) {
-        let ClickImgId = ImagesRank[i];
-            ClickImgId.addEventListener("click", () => {
+           let ClickImgId = ImagesRank[i];
+               ClickImgId.addEventListener("click", () => {
+                   alert(ClickImgId.id);
+               })
+           }
 
-                //let selectedImg = document.getElementById(listImg[i]);
-                console.log(ClickImgId);
-            })
-        }
-
+    //listPics.forEach(function(item, array) {
+    //    console.log(item);
+    //})
+*/
 })
 
 
 // requete des films genre Animation les mieux notés
-
+/*
 fetchingApiViaUrl(urlGenre+'Animation')
 .then((data) => {
     let movies = data;
@@ -174,7 +213,7 @@ fetchingApiViaUrl(urlGenre+'Romance')
     best_romance_rank.scrollLeft = 0
 })
 
-//// requete des films de science fictions les mieux notés
+//// requete des films biographie les mieux notés
 
 fetchingApiViaUrl(urlGenre+'Biography')
 .then((data) => {
@@ -202,37 +241,8 @@ fetchingApiViaUrl(urlGenre+'Biography')
 
     best_bio_rank.scrollLeft = 0
 })
+*/
 
-function ModalTriggering(modalId, triggerId){
+// Modal + infos du Film le mieux noté.
 
-    // Get the modal
-    let modal = document.getElementById(modalId);
-
-    // Get the button that opens the modal
-    let btn = document.getElementById(triggerId);
-
-    // Get the <span> element that closes the modal
-    let span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks the button, open the modal
-    btn.onclick = function() {
-      modal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    //function onClickSpan(){
-    //    modal.style.display = "none";
-    //}
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
-}
-
-// Modal + plus d'infos du Film le mieux noté.
 ModalTriggering("myModal", "myBtn")
