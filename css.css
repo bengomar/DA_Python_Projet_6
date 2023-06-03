@@ -1,12 +1,15 @@
 * {
   font-family: Arial;
 }
-img.logo{
+img.logo {
     width : 150px;
     height : 150px;
 }
 img.logo:hover {
     opacity: 0.5
+}
+h3 {
+    text-align: center;
 }
 .menu {
    text-decoration: none;
@@ -131,7 +134,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
     max-width: 720px;
     overflow-x: scroll;
 }
-#drama_rank {
+#romance_rank {
     max-width: 720px;
     overflow-x: scroll;
 }

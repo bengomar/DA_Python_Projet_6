@@ -26,28 +26,7 @@ function slideArrowsFunction(genre, left_arrow, right_arrow) {
 
 }
 
-fetchingApiViaUrl(imdb_score)
-.then(data => {
-    let best_film = data.results[0];
-    let image = document.getElementById("bestFilm_image");
-    let title = document.getElementById("bestFilm_title");
-
-
-    //console.log(best_film);
-
-    image.style.backgroundImage = `url('${best_film.image_url}')`;
-    title.innerText = best_film.title;
-
-    return fetch(`http://localhost:8000/api/v1/titles/${best_film.id}`);
-})
-.then((response) => {
-    return response.json();
-})
-.then((filmInfo) => {
-    //console.log(filmInfo);
-
-    let description = document.getElementById("bestFilm_resume");
-
+function ModalMovieInformations(filmInfo) {
     let modalImage = document.getElementById("modalImage");
     let modalTitle = document.getElementById("modalTitle");
     let modalGenres = document.getElementById("modalGenres");
@@ -61,8 +40,6 @@ fetchingApiViaUrl(imdb_score)
     let modalWorldwide_gross_income = document.getElementById("modalWorldwide_gross_income");
     let modalResume = document.getElementById("modalResume");
 
-    description.innerText = filmInfo.description
-
     modalImage.style.backgroundImage = `url('${filmInfo.image_url}')`;
     modalTitle.innerText = "Titre: " + filmInfo.title;
     modalGenres.innerText = "Genre: " + filmInfo.genres[0];
@@ -75,6 +52,32 @@ fetchingApiViaUrl(imdb_score)
     modalCountries.innerText = "Pays: " + filmInfo.countries;
     modalWorldwide_gross_income.innerText = "Résultat au Box Office: " + filmInfo.worldwide_gross_income;
     modalResume.innerText = "Résumé: \n" + filmInfo.long_description;
+}
+
+fetchingApiViaUrl(imdb_score)
+.then(data => {
+    let best_film = data.results[0];
+    let best_image = document.getElementById("bestFilm_image");
+    let best_title = document.getElementById("bestFilm_title");
+
+
+    //console.log(best_film);
+
+    best_image.style.backgroundImage = `url('${best_film.image_url}')`;
+    best_title.innerText = best_film.title;
+
+    return fetch(`http://localhost:8000/api/v1/titles/${best_film.id}`);
+})
+.then((response) => {
+    return response.json();
+})
+.then((filmInfo) => {
+    //console.log(filmInfo);
+
+    let best_description = document.getElementById("bestFilm_resume");
+    best_description.innerText = filmInfo.description;
+
+    ModalMovieInformations(filmInfo)
 })
 
 
@@ -85,27 +88,37 @@ fetchingApiViaUrl(imdb_score)
     let movies = data;
     let best_movies_rank = document.getElementById("rank");
     let cpt = 1;
+    let listImg = [];
 
     movies.results.forEach(function(movie){
         const movie_div = document.createElement("div");
         movie_div.classList.add("movie-cover");
-        movie_div.id = 'rank-img' + cpt;
+        movie_div_id = 'rank-img' + cpt;
         cpt++;
         movie_div.style.backgroundImage = `url('${movie.image_url}')`;
-        movie_div.id.onclick = function(){modal.style.display = "block"};
         best_movies_rank.appendChild(movie_div);
-        console.log(movie_div, movie_div.id)
-
-
+        listImg.push(movie_div_id);
     })
+    console.log(listImg);
 
     let left_arrow = document.getElementsByClassName("rank-arrow-left")
     let right_arrow = document.getElementsByClassName("rank-arrow-right");
-
     slideArrowsFunction(best_movies_rank, left_arrow, right_arrow);
-
     best_movies_rank.scrollLeft = 0
+
+    let ImagesRank = document.getElementsByClassName("movie-cover");
+
+    for (var i = 0; i < ImagesRank.length; i++) {
+        let ClickImgId = ImagesRank[i];
+            ClickImgId.addEventListener("click", () => {
+
+                //let selectedImg = document.getElementById(listImg[i]);
+                console.log(ClickImgId);
+            })
+        }
+
 })
+
 
 // requete des films genre Animation les mieux notés
 
@@ -123,7 +136,7 @@ fetchingApiViaUrl(urlGenre+'Animation')
         movie_div.style.backgroundImage = `url('${movie.image_url}')`;
         //movie_div.onclick = function(){modal.style.display = "block"};
         best_anime_rank.appendChild(movie_div);
-        console.log(movie_div, movie_div.id)
+        //console.log(movie_div, movie_div.id)
     })
 
     let left_arrow = document.getElementsByClassName("anime-arrow-left")
@@ -139,26 +152,26 @@ fetchingApiViaUrl(urlGenre+'Animation')
 fetchingApiViaUrl(urlGenre+'Romance')
 .then((data) => {
     let movies = data;
-    let best_drama_rank = document.getElementById("drama_rank");
+    let best_romance_rank = document.getElementById("romance_rank");
     let cpt = 1;
 
     movies.results.forEach(function(movie){
         const movie_div = document.createElement("div");
         movie_div.classList.add("movie-cover");
-        movie_div.id = 'drama-img' + cpt;
+        movie_div.id = 'romance-img' + cpt;
         cpt++;
         movie_div.style.backgroundImage = `url('${movie.image_url}')`;
         //movie_div.onclick = function(){modal.style.display = "block"};
-        best_drama_rank.appendChild(movie_div);
-        console.log(movie_div, movie_div.id)
+        best_romance_rank.appendChild(movie_div);
+        //console.log(movie_div, movie_div.id)
     })
 
-    let left_arrow = document.getElementsByClassName("drama-arrow-left")
-    let right_arrow = document.getElementsByClassName("drama-arrow-right");
+    let left_arrow = document.getElementsByClassName("romance-arrow-left")
+    let right_arrow = document.getElementsByClassName("romance-arrow-right");
 
-    slideArrowsFunction(best_drama_rank, left_arrow, right_arrow);
+    slideArrowsFunction(best_romance_rank, left_arrow, right_arrow);
 
-    best_drama_rank.scrollLeft = 0
+    best_romance_rank.scrollLeft = 0
 })
 
 //// requete des films de science fictions les mieux notés
@@ -169,7 +182,7 @@ fetchingApiViaUrl(urlGenre+'Biography')
     let best_bio_rank = document.getElementById("bio_rank");
     let cpt = 1;
 
-    console.log(movies);
+    //console.log(movies);
 
     movies.results.forEach(function(movie){
         const movie_div = document.createElement("div");
@@ -177,9 +190,9 @@ fetchingApiViaUrl(urlGenre+'Biography')
         movie_div.id = 'bio-img' + cpt;
         cpt++;
         movie_div.style.backgroundImage = `url('${movie.image_url}')`;
-        movie_div.onclick = function(){modal.style.display = "block"};
+        //movie_div.onclick = function(){modal.style.display = "block"};
         best_bio_rank.appendChild(movie_div);
-        console.log(movie_div, movie_div.id)
+        //console.log(movie_div, movie_div.id)
     })
 
     let left_arrow = document.getElementsByClassName("bio-arrow-left")
@@ -190,30 +203,36 @@ fetchingApiViaUrl(urlGenre+'Biography')
     best_bio_rank.scrollLeft = 0
 })
 
-// Get the modal
-let modal = document.getElementById("myModal");
+function ModalTriggering(modalId, triggerId){
 
-// Get the button that opens the modal
-let btn = document.getElementById("myBtn");
+    // Get the modal
+    let modal = document.getElementById(modalId);
 
-// Get the <span> element that closes the modal
-let span = document.getElementsByClassName("close")[0];
+    // Get the button that opens the modal
+    let btn = document.getElementById(triggerId);
 
-// When the user clicks the button, open the modal
-btn.onclick = function() {
-  modal.style.display = "block";
+    // Get the <span> element that closes the modal
+    let span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    //function onClickSpan(){
+    //    modal.style.display = "none";
+    //}
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
 }
 
-// When the user clicks on <span> (x), close the modal
-//function onClickSpan(){
-//    modal.style.display = "none";
-//}
-span.onclick = function() {
-  modal.style.display = "none";
-}
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
+// Modal + plus d'infos du Film le mieux noté.
+ModalTriggering("myModal", "myBtn")
