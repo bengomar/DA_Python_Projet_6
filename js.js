@@ -50,6 +50,7 @@ function ModalMovieInformations(movie_id) {
         let modalWorldwide_gross_income = document.getElementById("modalWorldwide_gross_income");
         let modalResume = document.getElementById("modalResume");
 
+
         modalImage.style.backgroundImage = `url('${data.image_url}')`;
         modalTitle.innerText = "Titre: " + data.title;
         modalGenres.innerText = "Genre: " + data.genres[0];
@@ -63,27 +64,23 @@ function ModalMovieInformations(movie_id) {
         modalWorldwide_gross_income.innerText = "Résultat au Box Office: " + data.worldwide_gross_income;
         modalResume.innerText = "Résumé: \n" + data.long_description;
         });
-   ModalTriggering("myModal", "myBtn")
-   //console.log(id_film);
-   //ModalTriggering("myModal", "id_film")
+
+ModalTriggering("myModal")
+
 }
 
+
 // Fonction de création et gestion de la modal.
-function ModalTriggering(modalId, triggerId){
-
-    // Get the modal
+function ModalTriggering(modalId){
     let modal = document.getElementById(modalId);
+    modal.style.display = "none";
 
-    // Get the button that opens the modal
-    let btn = document.getElementById(triggerId);
 
     // Get the <span> element that closes the modal
     let span = document.getElementsByClassName("close")[0];
 
     // When the user clicks the button, open the modal
-    btn.onclick = function() {
-      modal.style.display = "block";
-    }
+    modal.style.display = "block";
 
     // When the user clicks on <span> (x), close the modal
     //function onClickSpan(){
@@ -121,8 +118,9 @@ fetchingApiViaUrl(imdb_score)
 
     let best_description = document.getElementById("bestFilm_resume");
     best_description.innerText = filmInfo.description;
+    //document.getElementById("myBtn");
 
-    ModalMovieInformations(filmInfo.id)
+    ModalMovieInformations(filmInfo.id, this)
 })
 
 
@@ -145,8 +143,10 @@ fetchingApiViaUrl(imdb_score)
         movie_div.classList.add("movie-cover");
         movie_div_id = 'rank-img' + cpt;
         movie_div.setAttribute("id", movie_div_id);
+//        movie_div.setAttribute("data-toggle", "modal");
+//        movie_div.setAttribute("data-target", "#myModal" );
         movie_div.style.backgroundImage = `url('${movie.image_url}')`;
-        movie_div.setAttribute("onclick", `ModalMovieInformations(${movie.id})`);
+        movie_div.setAttribute("onclick", `ModalMovieInformations(${movie.id}, this)`);
         //movie_div.onclick = ModalMovieInformations(movie.id, movie_div_id);
         cpt++;
         //listPics.push(movie_div_id);
@@ -159,7 +159,7 @@ fetchingApiViaUrl(imdb_score)
 //                })
     })
     //console.log(movie_div_id);
-    //ModalTriggering("myModal", movie_div_id);
+    //ModalTriggering("myModal");
 
 
 
@@ -266,7 +266,7 @@ fetchingApiViaUrl(urlGenre+'Biography')
 */
 
 // Modal + infos du Film le mieux noté.
-//ModalTriggering("myModal", "myBtn")
+//ModalTriggering("myModal")
 
 
 
