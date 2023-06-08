@@ -13,10 +13,10 @@
   <body>
     <div class="flex-head">
       <a href="index.html"><img class="logo" src="images/logo.png" alt=""></a>
-      <div><a href="#rank" class="menu"><p>Film les mieux notés</p></a></div>
-      <div><a href="#anime_rank" class="menu"><p>Animation</p></a></div>
-      <div><a href="#drama_rank" class="menu"><p>Romance</p></a></div>
-      <div><a href="#bio_rank" class="menu"><p>Biographie</p></a></div>
+      <div><a href="#menu_rank" class="menu"><p>Film les mieux notés</p></a></div>
+      <div><a href="#menu_anime" class="menu"><p>Animation</p></a></div>
+      <div><a href="#menu_romance" class="menu"><p>Romance</p></a></div>
+      <div><a href="#menu_bio" class="menu"><p>Biographie</p></a></div>
     </div>
 
 <!--Section du film le mieux noté    -->
@@ -30,12 +30,11 @@
             <div id="myModal" class="modal">
               <!-- Modal content -->
               <div class="modal-content">
-<!--                <span class="close" onclick="onClickSpan()">&times;</span>-->
-                  <span class="close">&times</span>
+                <span class="close">&times</span>
                 <div class="flex-modal">
                   <div id="modalImage"></div>
                   <div class="flex-horizon">
-                      <div id="modalTitle">Titre: </div>
+                      <div id="modalTitle"></div>
                       <div id="modalGenres"></div>
                       <div id="modalYear"></div>
                       <div id="modalRated"></div>
@@ -61,7 +60,7 @@
     <div class="carrousels">
 
         <!--    Films les mieux notés-->
-        <h3>Films les mieux notés</h3>
+        <h3 id="menu_rank">Films les mieux notés</h3>
         <div class="flex">
             <button class="slide-arrow-prev rank-arrow-left">&#8249;</button>
             <div id="rank" class="flex-container"> </div>
@@ -69,7 +68,7 @@
         </div>
 
         <!--    Films d'Animations les mieux notés-->
-        <h3>Animation</h3>
+        <h3 id="menu_anime">Animation</h3>
         <div class="flex">
             <button class="slide-arrow-prev anime-arrow-left" >&#8249;</button>
             <div id="anime_rank" class="flex-container"></div>
@@ -77,14 +76,14 @@
         </div>
 
         <!--    Films dramatiques les mieux notés-->
-        <h3>Romance</h3>
+        <h3 id="menu_romance">Romance</>
         <div class="flex">
             <button class="slide-arrow-prev romance-arrow-left" >&#8249;</button>
             <div id="romance_rank" class="flex-container"></div>
             <button class="slide-arrow-next romance-arrow-right">&#8250;</button>
         </div>
         <!--    Films biographiques les mieux notés-->
-        <h3>Biographie</h3>
+        <h3 id="menu_bio">Biographie</>
         <div class="flex">
             <button class="slide-arrow-prev bio-arrow-left" >&#8249;</button>
             <div id="bio_rank" class="flex-container"></div>

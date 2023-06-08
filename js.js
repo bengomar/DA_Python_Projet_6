@@ -50,7 +50,7 @@ function ModalMovieInformations(movie_id) {
         let modalResume = document.getElementById("modalResume");
 
         modalImage.style.backgroundImage = `url('${data.image_url}')`;
-        modalTitle.innerText = data.title;
+        modalTitle.innerText = "Titre: " + data.title;
         modalGenres.innerText = "Genre: " + data.genres[0];
         modalYear.innerText = "Année: " + data.year;
         modalRated.innerText = "Rated: " + data.rated;
