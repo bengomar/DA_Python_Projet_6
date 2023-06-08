@@ -31,12 +31,11 @@ function slideArrowsFunction(genre, left_arrow, right_arrow) {
     }
 }
 
-// fonction permettant l'affichage des détails d'un film dans une modal.
+// fonction permettant l'affichage des détails d'un film dans la modal.
 function ModalMovieInformations(movie_id) {
    url = site+movie_id
    console.log(url)
-   fetchingApiViaUrl(url)
-   .then(data => {
+   fetchingApiViaUrl(url).then(data => {
         let modalImage = document.getElementById("modalImage");
         let modalTitle = document.getElementById("modalTitle");
         let modalGenres = document.getElementById("modalGenres");
@@ -50,9 +49,8 @@ function ModalMovieInformations(movie_id) {
         let modalWorldwide_gross_income = document.getElementById("modalWorldwide_gross_income");
         let modalResume = document.getElementById("modalResume");
 
-
         modalImage.style.backgroundImage = `url('${data.image_url}')`;
-        modalTitle.innerText = "Titre: " + data.title;
+        modalTitle.innerText = data.title;
         modalGenres.innerText = "Genre: " + data.genres[0];
         modalYear.innerText = "Année: " + data.year;
         modalRated.innerText = "Rated: " + data.rated;
@@ -63,70 +61,55 @@ function ModalMovieInformations(movie_id) {
         modalCountries.innerText = "Pays: " + data.countries;
         modalWorldwide_gross_income.innerText = "Résultat au Box Office: " + data.worldwide_gross_income;
         modalResume.innerText = "Résumé: \n" + data.long_description;
-        });
 
-ModalTriggering("myModal")
+        modal.style.display = "block";
 
+   });
 }
 
 
-// Fonction de création et gestion de la modal.
-function ModalTriggering(modalId){
-    let modal = document.getElementById(modalId);
-    modal.style.display = "none";
-
-
-    // Get the <span> element that closes the modal
-    let span = document.getElementsByClassName("close")[0];
-
-    // When the user clicks the button, open the modal
-    modal.style.display = "block";
-
-    // When the user clicks on <span> (x), close the modal
-    //function onClickSpan(){
-    //    modal.style.display = "none";
-    //}
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
+let modal = document.getElementById("myModal");
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
         modal.style.display = "none";
-      }
     }
 }
 
-fetchingApiViaUrl(imdb_score)
-.then(data => {
+// Get the <span> element that closes the modal
+let span = document.getElementsByClassName("close")[0];
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// Film le mieux noté
+// Affichage des détails du film dans la modal
+fetchingApiViaUrl(imdb_score).then(data => {
     let best_film = data.results[0];
     let best_image = document.getElementById("bestFilm_image");
     let best_title = document.getElementById("bestFilm_title");
-
-
-    //console.log(best_film);
 
     best_image.style.backgroundImage = `url('${best_film.image_url}')`;
     best_title.innerText = best_film.title;
     url_film_id = site+best_film.id
 
+    let myBtn = document.getElementById("myBtn");
+    myBtn.onclick = function(){
+        console.log(best_film);
+        ModalMovieInformations(best_film.id);
+    }
+
     return fetchingApiViaUrl(url_film_id);
-    //return fetch(`http://localhost:8000/api/v1/titles/${best_film.id}`);
-})
-.then((filmInfo) => {
-    //console.log(filmInfo);
+}).then((filmInfo) => {
 
     let best_description = document.getElementById("bestFilm_resume");
     best_description.innerText = filmInfo.description;
-    //document.getElementById("myBtn");
-
-    ModalMovieInformations(filmInfo.id, this)
 })
 
 
 // the best films imdb ranking
-fetchingApiViaUrl(imdb_score)
-.then((data) => {
+fetchingApiViaUrl(imdb_score).then((data) => {
 
     let best_movies_rank = document.getElementById("rank");
     let left_arrow = document.getElementsByClassName("rank-arrow-left")
@@ -136,137 +119,107 @@ fetchingApiViaUrl(imdb_score)
 
     let movies = data;
     let cpt = 1;
-    //let listPics = [];
 
     movies.results.forEach(function(movie){
         const movie_div = document.createElement("div");
         movie_div.classList.add("movie-cover");
         movie_div_id = 'rank-img' + cpt;
         movie_div.setAttribute("id", movie_div_id);
-//        movie_div.setAttribute("data-toggle", "modal");
-//        movie_div.setAttribute("data-target", "#myModal" );
         movie_div.style.backgroundImage = `url('${movie.image_url}')`;
-        movie_div.setAttribute("onclick", `ModalMovieInformations(${movie.id}, this)`);
-        //movie_div.onclick = ModalMovieInformations(movie.id, movie_div_id);
+
+        //movie_div.setAttribute("onclick", `ModalMovieInformations(${movie.id}, this)`);
+        movie_div.onclick = function(){
+            console.log(movie);
+            ModalMovieInformations(movie.id);
+        }
         cpt++;
-        //listPics.push(movie_div_id);
         best_movies_rank.appendChild(movie_div);
-
-
-//        fetchingApiViaUrl(site+movie.id)
-//                .then((filmInfo) => {
-//                console.log(filmInfo);
-//                })
     })
-    //console.log(movie_div_id);
-    //ModalTriggering("myModal");
-
-
-
-//    listPics.forEach(pic => console.log(pic)
-//    );
-//    console.log(movie.id)
-//    let ImagesRank = document.getElementsByClassName("movie-cover");
-//    for (var i = 0; i < ImagesRank.length; i++) {
-//           let ClickImgId = ImagesRank[i];
-//               ClickImgId.addEventListener("click", () => {
-//                   alert(ClickImgId.id);
-//               })
-//           }
-
-    //listPics.forEach(function(item, array) {
-    //    console.log(item);
-    //})
-
-})
+});
 
 
 // requete des films genre Animation les mieux notés
-/*
-fetchingApiViaUrl(urlGenre+'Animation')
-.then((data) => {
-    let movies = data;
+fetchingApiViaUrl(urlGenre+'Animation').then((data) => {
+
     let best_anime_rank = document.getElementById("anime_rank");
-    let cpt = 1;
-
-    movies.results.forEach(function(movie){
-        const movie_div = document.createElement("div");
-        movie_div.classList.add("movie-cover");
-        movie_div.id = 'anime-img' + cpt;
-        cpt++;
-        movie_div.style.backgroundImage = `url('${movie.image_url}')`;
-        //movie_div.onclick = function(){modal.style.display = "block"};
-        best_anime_rank.appendChild(movie_div);
-        //console.log(movie_div, movie_div.id)
-    })
-
     let left_arrow = document.getElementsByClassName("anime-arrow-left")
     let right_arrow = document.getElementsByClassName("anime-arrow-right");
-
     slideArrowsFunction(best_anime_rank, left_arrow, right_arrow);
-
     best_anime_rank.scrollLeft = 0
-})
 
-// requete des films genre Romance les mieux notés
-
-fetchingApiViaUrl(urlGenre+'Romance')
-.then((data) => {
     let movies = data;
-    let best_romance_rank = document.getElementById("romance_rank");
     let cpt = 1;
 
     movies.results.forEach(function(movie){
         const movie_div = document.createElement("div");
         movie_div.classList.add("movie-cover");
-        movie_div.id = 'romance-img' + cpt;
-        cpt++;
+        movie_div_id = 'anime-img' + cpt;
+        movie_div.setAttribute("id", movie_div_id);
         movie_div.style.backgroundImage = `url('${movie.image_url}')`;
-        //movie_div.onclick = function(){modal.style.display = "block"};
-        best_romance_rank.appendChild(movie_div);
-        //console.log(movie_div, movie_div.id)
+        movie_div.onclick = function(){
+            console.log(movie);
+            ModalMovieInformations(movie.id);
+        }
+        cpt++;
+        best_anime_rank.appendChild(movie_div);
     })
+});
 
+
+// requete des films genre Romance les mieux notés
+fetchingApiViaUrl(urlGenre+'Romance').then((data) => {
+
+    let best_romance_rank = document.getElementById("romance_rank");
     let left_arrow = document.getElementsByClassName("romance-arrow-left")
     let right_arrow = document.getElementsByClassName("romance-arrow-right");
-
     slideArrowsFunction(best_romance_rank, left_arrow, right_arrow);
-
     best_romance_rank.scrollLeft = 0
-})
+
+    let movies = data;
+    let cpt = 1;
+
+    movies.results.forEach(function(movie){
+        const movie_div = document.createElement("div");
+        movie_div.classList.add("movie-cover");
+        movie_div_id = 'romance-img' + cpt;
+        movie_div.setAttribute("id", movie_div_id);
+        movie_div.style.backgroundImage = `url('${movie.image_url}')`;
+        movie_div.onclick = function(){
+            console.log(movie);
+            ModalMovieInformations(movie.id);
+        }
+        cpt++;
+        best_romance_rank.appendChild(movie_div);
+    })
+});
 
 //// requete des films biographie les mieux notés
 
-fetchingApiViaUrl(urlGenre+'Biography')
-.then((data) => {
-    let movies = data;
-    let best_bio_rank = document.getElementById("bio_rank");
-    let cpt = 1;
+fetchingApiViaUrl(urlGenre+'Biography').then((data) => {
 
-    //console.log(movies);
+    let best_bio_rank = document.getElementById("bio_rank");
+    let left_arrow = document.getElementsByClassName("bio-arrow-left")
+    let right_arrow = document.getElementsByClassName("bio-arrow-right");
+    slideArrowsFunction(best_bio_rank, left_arrow, right_arrow);
+    best_bio_rank.scrollLeft = 0
+
+    let movies = data;
+    let cpt = 1;
 
     movies.results.forEach(function(movie){
         const movie_div = document.createElement("div");
         movie_div.classList.add("movie-cover");
-        movie_div.id = 'bio-img' + cpt;
-        cpt++;
+        movie_div_id = 'bio-img' + cpt;
+        movie_div.setAttribute("id", movie_div_id);
         movie_div.style.backgroundImage = `url('${movie.image_url}')`;
-        //movie_div.onclick = function(){modal.style.display = "block"};
+        movie_div.onclick = function(){
+            console.log(movie);
+            ModalMovieInformations(movie.id);
+        }
+        cpt++;
         best_bio_rank.appendChild(movie_div);
-        //console.log(movie_div, movie_div.id)
     })
-
-    let left_arrow = document.getElementsByClassName("bio-arrow-left")
-    let right_arrow = document.getElementsByClassName("bio-arrow-right");
-
-    slideArrowsFunction(best_bio_rank, left_arrow, right_arrow);
-
-    best_bio_rank.scrollLeft = 0
-})
-*/
-
-// Modal + infos du Film le mieux noté.
-//ModalTriggering("myModal")
+});
 
 
 
