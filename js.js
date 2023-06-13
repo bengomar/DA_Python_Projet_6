@@ -128,7 +128,7 @@ function GetMovieInformations(movies, best_movie) {
 fetchingApiViaUrl(imdb_score).then((data) => {
     let best_movies_rank = document.getElementById("rank");
     GetMovieInformations(data, best_movies_rank);
-
+    // Gestion des flèches de défilements du carrousel
     let left_arrow = document.getElementsByClassName("rank-arrow-left");
     let right_arrow = document.getElementsByClassName("rank-arrow-right");
     slideArrowsFunction(best_movies_rank, left_arrow, right_arrow);
@@ -138,7 +138,7 @@ fetchingApiViaUrl(imdb_score).then((data) => {
 fetchingApiViaUrl(urlGenre+'Animation').then((data) => {
     let best_anime_rank = document.getElementById("anime_rank");
     GetMovieInformations(data, best_anime_rank);
-
+    // Gestion des flèches de défilements du carrousel
     let left_arrow = document.getElementsByClassName("anime-arrow-left");
     let right_arrow = document.getElementsByClassName("anime-arrow-right");
     slideArrowsFunction(best_anime_rank, left_arrow, right_arrow);
@@ -148,7 +148,7 @@ fetchingApiViaUrl(urlGenre+'Animation').then((data) => {
 fetchingApiViaUrl(urlGenre+'Romance').then((data) => {
     let best_romance_rank = document.getElementById("romance_rank");
     GetMovieInformations(data, best_romance_rank);
-
+    // Gestion des flèches de défilements du carrousel
     let left_arrow = document.getElementsByClassName("romance-arrow-left");
     let right_arrow = document.getElementsByClassName("romance-arrow-right");
     slideArrowsFunction(best_romance_rank, left_arrow, right_arrow);
@@ -158,7 +158,7 @@ fetchingApiViaUrl(urlGenre+'Romance').then((data) => {
 fetchingApiViaUrl(urlGenre+'Biography').then((data) => {
     let best_bio_rank = document.getElementById("bio_rank");
     GetMovieInformations(data, best_bio_rank);
-
+    // Gestion des flèches de défilements du carrousel
     let left_arrow = document.getElementsByClassName("bio-arrow-left");
     let right_arrow = document.getElementsByClassName("bio-arrow-right");
     slideArrowsFunction(best_bio_rank, left_arrow, right_arrow);
