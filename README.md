@@ -4,12 +4,11 @@
 
 ### Description du projet
 Développez une interface utilisateur pour une application web permettant de visualiser en temps réel un classement de films intéressants.
+Cette application s'appuie sur une API existante (OCMovies-API).
 
-
-
+&nbsp;
 
 ### Installation
-
 #### Récupérer l'API OCMovies-API:
 
 1. Cloner ce dépôt de code à l'aide de la commande `$ git clone clone https://github.com/OpenClassrooms-Student-Center/OCMovies-API-EN-FR.git`, 
