@@ -83,7 +83,10 @@ span.onclick = function() {
     modal.style.display = "none";
 }
 
-// Film le mieux noté
+///////////////////////////
+// Le film le mieux noté //
+///////////////////////////
+
 // Affichage des détails du film dans la modal
 fetchingApiViaUrl(imdb_score).then(data => {
     let best_film = data.results[0];
@@ -124,9 +127,9 @@ function GetMovieInformations(movies, best_movie) {
     })
 }
 
-// the best films imdb ranking
+// 1. Les films les mieux notés tous genres confondus.
 fetchingApiViaUrl(imdb_score).then((data) => {
-    let best_movies_rank = document.getElementById("rank");
+    let best_movies_rank = document.getElementById("best_rank");
     GetMovieInformations(data, best_movies_rank);
     // Gestion des flèches de défilements du carrousel
     let left_arrow = document.getElementsByClassName("rank-arrow-left");
@@ -134,7 +137,7 @@ fetchingApiViaUrl(imdb_score).then((data) => {
     slideArrowsFunction(best_movies_rank, left_arrow, right_arrow);
 });
 
-// requete des films genre Animation les mieux notés
+// 2. Les films d'animation les mieux notés.
 fetchingApiViaUrl(urlGenre+'Animation').then((data) => {
     let best_anime_rank = document.getElementById("anime_rank");
     GetMovieInformations(data, best_anime_rank);
@@ -144,7 +147,7 @@ fetchingApiViaUrl(urlGenre+'Animation').then((data) => {
     slideArrowsFunction(best_anime_rank, left_arrow, right_arrow);
 });
 
-// requete des films genre Romance les mieux notés
+// 3. Les films romantiques les mieux notés.
 fetchingApiViaUrl(urlGenre+'Romance').then((data) => {
     let best_romance_rank = document.getElementById("romance_rank");
     GetMovieInformations(data, best_romance_rank);
@@ -154,7 +157,7 @@ fetchingApiViaUrl(urlGenre+'Romance').then((data) => {
     slideArrowsFunction(best_romance_rank, left_arrow, right_arrow);
 });
 
-// requete des films biographie les mieux notés
+// 4. Les films biographique les mieux notés
 fetchingApiViaUrl(urlGenre+'Biography').then((data) => {
     let best_bio_rank = document.getElementById("bio_rank");
     GetMovieInformations(data, best_bio_rank);

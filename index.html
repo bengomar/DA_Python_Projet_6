@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html" lang="fr">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <!-- Permet l'adaptation de la surface aux tablettes et mobiles -->
@@ -24,13 +24,13 @@
     <div class="flex">
       <div id="bestFilm_image"></div>
       <div>
-          <div><h2 id="bestFilm_title"></h2></div>
-          <div><button id="myBtn">Plus de Détails</button>
+          <div id="bestFilm_title"></div>
+          <div id="detailButton"><button id="myBtn">Plus de Détails</button>
             <!-- The Modal -->
             <div id="myModal" class="modal">
               <!-- Modal content -->
               <div class="modal-content">
-                <span class="close">&times</span>
+                <span class="close">&times;</span>
                 <div class="flex-modal">
                   <div id="modalImage"></div>
                   <div class="flex-horizon">
@@ -63,7 +63,7 @@
         <h3 id="menu_rank">Films les mieux notés</h3>
         <div class="flex">
             <button class="slide-arrow-prev rank-arrow-left">&#8249;</button>
-            <div id="rank" class="flex-container"> </div>
+            <div id="best_rank" class="flex-container"> </div>
             <button class="slide-arrow-next rank-arrow-right">&#8250;</button>
         </div>
 
@@ -76,14 +76,14 @@
         </div>
 
         <!--    Films dramatiques les mieux notés-->
-        <h3 id="menu_romance">Romance</>
+        <h3 id="menu_romance">Romance</h3>
         <div class="flex">
             <button class="slide-arrow-prev romance-arrow-left" >&#8249;</button>
             <div id="romance_rank" class="flex-container"></div>
             <button class="slide-arrow-next romance-arrow-right">&#8250;</button>
         </div>
         <!--    Films biographiques les mieux notés-->
-        <h3 id="menu_bio">Biographie</>
+        <h3 id="menu_bio">Biographie</h3>
         <div class="flex">
             <button class="slide-arrow-prev bio-arrow-left" >&#8249;</button>
             <div id="bio_rank" class="flex-container"></div>

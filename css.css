@@ -11,6 +11,7 @@ img.logo:hover {
 h3 {
     text-align: center;
 }
+
 .menu {
    text-decoration: none;
    color: black
@@ -18,7 +19,6 @@ h3 {
 .flex-head{
     display: flex;
     justify-content: space-around;
-    //background-color: Khaki;
     background-color: PowderBlue;
     border-radius: 30px;
     align-items: end;
@@ -26,6 +26,8 @@ h3 {
 }
 
 #bestOf {
+    margin-top: 70px;
+    margin-bottom: 30px;
     text-align: center;
     text-shadow: 3px 3px 0px rgba(0,0,0,0.2);
 }
@@ -45,10 +47,21 @@ h3 {
 }
 
 #bestFilm_title {
-     border-style: none;
-     text-align: center;
-     width : 20em;
-     height : 2em;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    border-style: none;
+    text-align: center;
+    width : 512px;
+    height : 2em;
+}
+#detailButton {
+    width : 512px;
+    margin-bottom: 35px;
+    margin-top: 35px;
+    text-align: left ;
+    
 }
 #myBtn {
     margin-left: 12em;
@@ -71,7 +84,7 @@ h3 {
 .flex-container > div {
     width : 50em;
     height : 15em;
-    margin: 1em
+    margin: 1em;
     text-align: center;
 }
 
@@ -121,7 +134,24 @@ h3 {
     text-align: left;
     padding-left: 1em;
 }
-#rank {
+/*
+$img-param: (
+    best,
+    anime,
+    romance,
+    bio
+);
+
+@each img-param, $genre in $img-param {
+    ##{$genre}_rank {
+        max-width: 720px;
+        overflow-x: scroll;
+        }
+}
+*/
+
+
+#best_rank {
     max-width: 720px;
     overflow-x: scroll;
 }
@@ -137,6 +167,7 @@ h3 {
     max-width: 720px;
     overflow-x: scroll;
 }
+
 .movie-cover {
     min-width: 180px;
     background-repeat: no-repeat;
